@@ -16,6 +16,7 @@ class CreateDocumentsTable extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('nip');
+            $table->string('id_supervisor');
             $table->string('mapel');
             $table->string('rpp');
             $table->string('embed');

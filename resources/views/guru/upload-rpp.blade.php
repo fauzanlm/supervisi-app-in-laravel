@@ -22,7 +22,24 @@
             <input type="hidden" name="nip" value="{{ Auth::user()->nip }}">
 
             <div class="row mb-3">
-                <label for="mapel" class="col-md-4 col-form-label text-md-end">{{ __('Mapel') }}</label>
+                <label for="id_supervisor" class="col-md-4 col-form-label text-md-start">Supervisor</label>
+                <div class="col-md-8 ">
+                    <select class="form-control" name="id_supervisor" id="id_supervisor">
+                        <option value="" selected disabled>Pilih...</option>
+                        @foreach ($dataSupervisor as $item)
+                            <option value="{{$item->nip}}" {{old('id_supervisor') == $item->nip ? 'selected' : ''}}>{{$item->name}}</option>
+                        @endforeach
+                    </select>
+                    @error('id_supervisor')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="mapel" class="col-md-4 col-form-label text-md-start">{{ __('Mapel') }}</label>
 
                 <div class="col-md-8">
                     <input id="mapel" type="text" class="form-control @error('mapel') is-invalid @enderror" name="mapel" value="{{ old('mapel') }}"  autocomplete="mapel" autofocus>
@@ -36,7 +53,7 @@
             </div>
 
             <div class="row mb-3">
-                <label for="rpp" class="col-md-4 col-form-label text-md-end">{{ __('RPP') }}</label>
+                <label for="rpp" class="col-md-4 col-form-label text-md-start">{{ __('RPP') }}</label>
 
                 <div class="col-md-8">
                     <input id="rpp" type="file" class="form-control @error('rpp') is-invalid @enderror" name="rpp" value="{{ old('rpp') }}"  autocomplete="rpp" autofocus>
@@ -51,7 +68,7 @@
 
 
             <div class="row mb-3">
-                <label for="embed" class="col-md-4 col-form-label text-md-end">{{ __('Embed Video Link') }}</label>
+                <label for="embed" class="col-md-4 col-form-label text-md-start">{{ __('Embed Video Link') }}</label>
 
                 <div class="col-md-8">
                     <input id="embed" type="url" class="form-control @error('embed') is-invalid @enderror" name="embed" value="{{ old('embed') }}"  autocomplete="embed">
@@ -64,13 +81,10 @@
                 </div>
             </div>
 
-            <div class="row mb-0">
-                <div class="col-md-6 offset-md-4">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary float-right">
                         {{ __('Upload') }}
                     </button>
-                </div>
-            </div>
+
         </form>
 
     </div>

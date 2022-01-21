@@ -29,6 +29,11 @@ class Jadwal extends Model
 
     public function doc()
     {
-        return $this->belongsTo(Documents::class, 'nip', 'nip');
+        return $this->belongsTo(Documents::class, 'id_supervisor', 'id_supervisor');
+    }
+
+    public function cek()
+    {
+        return $this->hasOne(Documents::class, 'nip', 'nip');
     }
 }

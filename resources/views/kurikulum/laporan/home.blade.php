@@ -25,6 +25,7 @@
                     <th>RPP</th>
                     <th>Embed Video</th>
                     <th>Status</th>
+                    <th>Catatan</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +37,7 @@
                         <td><a href="{{asset('rpp/'.$dt->rpp)}}" class="ml-2" target="_blank">pdf</a></td>
                         <td><a target="_blank" href="{{$dt->embed}}">Link</a></td>
                         <td>{{$dt->status}}</td>
-
+                        <td>{{$dt->catatan}}</td>
                     </tr>
                 @endforeach
             </tbody>

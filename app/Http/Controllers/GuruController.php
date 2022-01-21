@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Documents;
 use App\Models\Jadwal;
+use App\Models\User;
 
 class GuruController extends Controller
 {
@@ -33,7 +34,10 @@ class GuruController extends Controller
      */
     public function uploadRpp()
     {
-        return view('guru.upload-rpp');
+        $supervisor = Jadwal::where('nip', '=', Auth::user()->nip)->pluck('id_supervisor');
+        // dd($supervisor);
+        $dataSupervisor = User::where('supervisor', '=', '1', 'and')->whereIn('nip', $supervisor)->get();
+        return view('guru.upload-rpp',compact('dataSupervisor'));
     }
 
     public function uploadRppPost( Request $request)
@@ -42,7 +46,7 @@ class GuruController extends Controller
             'rpp' => 'required|mimes:pdf|max:2048',
             'mapel' => 'required',
             'embed' => 'required',
-
+            'id_supervisor' => 'required'
         ]);
 
         $name = time().'.'. $request->file('rpp')->getClientOriginalName();
@@ -53,10 +57,11 @@ class GuruController extends Controller
             'rpp' => $name,
             'mapel' => $request->mapel,
             'embed' => $request->embed,
+            'id_supervisor' => $request->id_supervisor,
         ]);
 
 
-        return view('guru.upload-rpp');
+        return redirect()->route('guru.home');
     }
 
     /**

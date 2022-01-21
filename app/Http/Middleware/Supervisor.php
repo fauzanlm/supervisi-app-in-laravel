@@ -24,6 +24,6 @@ class Supervisor
             return $next($request);
         }
 
-        return redirect()->back()->withErrors(['msg' => 'Anda Tidak Memiliki Akses Ke sini!']);
+        return redirect()->back()->with('msg' , 'Anda Tidak Memiliki Akses Ke sini!');
     }
 }

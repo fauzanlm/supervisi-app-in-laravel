@@ -39,7 +39,7 @@ class KurikulumController extends Controller
 
     public function laporan()
     {
-        $data = Documents::all();
+        $data = Documents::where('status', '!=', 'belum lulus')->get();
         return view('kurikulum.laporan.home', compact('data'));
     }
 

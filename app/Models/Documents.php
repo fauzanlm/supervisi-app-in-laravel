@@ -11,14 +11,13 @@ class Documents extends Model
 
     protected $fillable = [
         'nip',
+        'id_supervisor',
         'mapel',
         'rpp',
         'embed',
-        'status'
+        'status',
+        'catatan'
     ];
 
-    public function cek()
-    {
-        return $this->hasOne(Documents::class, 'id_document', 'id');
-    }
+    
 }

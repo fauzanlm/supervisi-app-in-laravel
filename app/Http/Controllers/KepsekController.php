@@ -24,7 +24,7 @@ class KepsekController extends Controller
 
     public function laporan()
     {
-        $data = Documents::all();
+        $data = Documents::where('status', '!=', 'belum lulus')->get();
         return view('kepsek.laporan.list', compact('data'));
     }
     /**

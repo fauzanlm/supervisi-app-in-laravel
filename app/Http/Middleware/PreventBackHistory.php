@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Auth;
 
-class Kepsek
+class PreventBackHistory
 {
     /**
      * Handle an incoming request.
@@ -15,16 +14,11 @@ class Kepsek
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-
-        if (Auth::user()->role == 'kepsek') {
-            return $next($request);
-        }
-
-        return redirect()->back()->with('msg' , 'Anda Tidak Memiliki Akses Ke sini!');
+        $response = $next($request);
+        return $response->header('Cache-Control','nocache, no-store, max-age=0, must-revalidate')
+            ->header('Pragma','no-cache')
+            ->header('Expires','Sun, 02 Jan 1990 00:00:00 GMT');
     }
 }

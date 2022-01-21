@@ -22,8 +22,8 @@ class SupervisorController extends Controller
 
     public function jadwal()
     {
-        $data = Jadwal::where('id_supervisor', '=', Auth::user()->nip )->get();
-        return view('supervisor.jadwal.list',compact('data'));
+        $data = Jadwal::where('id_supervisor', '=', Auth::user()->nip)->get();
+        return view('supervisor.jadwal.list', compact('data'));
     }
 
     /**
@@ -35,15 +35,20 @@ class SupervisorController extends Controller
     {
         //
     }
-    public function nilaipost($id)
+    public function nilaipost($id, Request $request)
     {
-        Documents::find($id)->update(['status' => 'lulus']);
-
+        Documents::find($id)->update([
+            'status' => 'lulus',
+            'catatan' => $request->catatan
+        ]);
         return redirect()->route('supervisor.jadwal')->with('msg-sc', 'Berhasil');
     }
-    public function nilaitidakluluspost($id)
+    public function nilaitidakluluspost($id,  Request $request)
     {
-        Documents::find($id)->update(['status' => 'tidak lulus']);
+        Documents::find($id)->update([
+            'status' => 'tidak lulus',
+            'catatan' => $request->catatan
+        ]);
 
         return redirect()->route('supervisor.jadwal')->with('msg-sc', 'Berhasil');
     }

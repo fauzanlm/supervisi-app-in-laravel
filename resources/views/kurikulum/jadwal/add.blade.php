@@ -20,7 +20,7 @@
             @csrf
 
             <div class="row mb-3">
-                <label for="nip" class="col-md-4 col-form-label text-md-end">Target Supervisi</label>
+                <label for="nip" class="col-md-4 col-form-label text-md-start">Target Supervisi</label>
                 <div class="col-md-8 ">
                     <select class="form-control" name="nip" id="nip">
                         <option value="" selected disabled>Pilih...</option>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="id_supervisor" class="col-md-4 col-form-label text-md-end">Supervisor</label>
+                <label for="id_supervisor" class="col-md-4 col-form-label text-md-start">Supervisor</label>
                 <div class="col-md-8 ">
                     <select class="form-control" name="id_supervisor" id="id_supervisor">
                         <option value="" selected disabled>Pilih...</option>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="tanggal_supervisi" class="col-md-4 col-form-label text-md-end">{{ __('Tanggal') }}</label>
+                <label for="tanggal_supervisi" class="col-md-4 col-form-label text-md-start">{{ __('Tanggal') }}</label>
 
                 <div class="col-md-8">
                     <input id="d" type="date" class="form-control @error('tanggal_supervisi') is-invalid @enderror" name="tanggal_supervisi" value="{{ old('tanggal_supervisi') }}" required autocomplete="tanggal_supervisi" autofocus>
@@ -66,7 +66,7 @@
             </div>
 
             <div class="row mb-3">
-                <label for="jam_dari" class="col-md-4 col-form-label text-md-end">{{ __('Jam Mulai') }}</label>
+                <label for="jam_dari" class="col-md-4 col-form-label text-md-start">{{ __('Jam Mulai') }}</label>
 
                 <div class="col-md-8">
                     <input id="jam_dari" type="time" class="form-control @error('jam_dari') is-invalid @enderror" name="jam_dari" value="{{ old('jam_dari') }}" required autocomplete="jam_dari">
@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label for="jam_sampai" class="col-md-4 col-form-label text-md-end">{{ __('Jam Selesai') }}</label>
+                <label for="jam_sampai" class="col-md-4 col-form-label text-md-start">{{ __('Jam Selesai') }}</label>
 
                 <div class="col-md-8">
                     <input id="jam_sampai" type="time" class="form-control @error('jam_sampai') is-invalid @enderror" name="jam_sampai" value="{{ old('jam_sampai') }}" required autocomplete="jam_sampai">
@@ -92,13 +92,11 @@
                 </div>
             </div>
 
-            <div class="row mb-0">
-                <div class="col-md-6 offset-md-4">
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Register') }}
+
+                    <button type="submit" class="btn btn-primary float-right">
+                        {{ __('Kirim') }}
                     </button>
-                </div>
-            </div>
+
         </form>
 
     </div>

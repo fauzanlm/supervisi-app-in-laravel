@@ -42,7 +42,7 @@
                         <td>
                             <div class="btn-group">
 
-                                <a href="{{route('kurikulum.jadwal.edit', $dt->id)}}" class="btn btn-sm btn-secondary"><i class="fas fa-user-edit"></i></a>
+
                                 <a href="{{route('kurikulum.jadwal.delete', $dt->id)}}" class="btn btn-sm btn-block btn-danger" onclick="return confirm('yakin ingin menghapus data ini?')"><i class="fas fa-trash"></i></a>
                             </div>
                         </td>

@@ -25,6 +25,7 @@
                     <th>Tanggal</th>
                     <th>Jam</th>
                     <th>Status</th>
+                    <th>Catatan</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -38,7 +39,15 @@
                         <td>{{$dt->jam_dari}} -  {{$dt->jam_sampai}}</td>
                         <td>{{ $dt->doc->status}}</td>
                         <td>
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="{{'#cekStatusModal'.$dt->id}}">
+                            @if ($dt->doc->catatan != NULL)
+
+                            {{ $dt->doc->catatan }}
+                            @else
+                                Tidak ada catatan...
+                            @endif
+                        </td>
+                        <td>
+                            <button type="button" class="text-white btn btn-info" data-toggle="modal" data-target="{{'#cekStatusModal'.$dt->id}}">
                                 Lihat Dokumen
                             </button>
 
@@ -54,33 +63,94 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="row mb-2">
-                                            <label for="dokumen">RPP :</label>
-                                            @if ($dt->doc)
-                                                <a href="{{asset('rpp/'.$dt->doc->rpp)}}" class="ml-2" target="_blank">link</a>
-                                            @else
+                                            <label for="dokumen">RPP :
+
+                                                @if ($dt->cek)
+                                                <a href="{{asset('rpp/'.$dt->cek->rpp)}}" class="ml-2" target="_blank">link</a>
+                                                @else
                                                 RPP Kosong!
-                                            @endif
+                                                @endif
+                                            </label>
                                         </div>
                                         <div class="row">
-                                            <label for="dokumen">Embed Video :</label>
-                                            @if ($dt->doc)
-                                                <a href="{{$dt->doc->embed}}" class="ml-2" target="_blank">link</a>
-                                            @else
-                                                Embed Kosong!
-                                            @endif
+                                            <label for="dokumen">Embed Video :
+
+                                                @if ($dt->cek)
+                                                    <a href="{{$dt->cek->embed}}" class="ml-2" target="_blank">link</a>
+                                                @else
+                                                    Embed Kosong!
+                                                @endif
+                                            </label>
                                         </div>
 
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <a href="{{ route('supervisor.nilai.post', $dt->doc->id)}}" class="btn btn-primary">Lulus</a>
+                                        @if ($dt->doc->status != 'lulus')
 
-                                        <a href="{{ route('supervisor.nilai.tidaklulus.post', $dt->doc->id)}}" class="btn btn-danger">Tidak Lulus</a>
-
+                                            <button type="button" class="text-white btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="{{'#lulusModal'.$dt->id}}">
+                                                Lulus
+                                            </button>
+                                        @endif
+                                        @if ($dt->doc->status != 'tidak lulus')
+                                            <button type="button" class="text-white btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="{{'#tidakLulusModal'.$dt->id}}">
+                                                Tidak Lulus
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="{{'lulusModal'.$dt->id}}" tabindex="-1" role="dialog" aria-labelledby="cekStatusModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="{{'lulusModal'.$dt->id}}">Catatan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post" action="{{ route('supervisor.nilai.post', $dt->doc->id)}}">
+                                        @csrf
+                                        @method('patch')
+                                            <div class="modal-body">
+                                                <textarea name="catatan" class="form-control" id="catatan" cols="30" rows="4"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Kirim</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="{{'tidakLulusModal'.$dt->id}}" tabindex="-1" role="dialog" aria-labelledby="cekStatusModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="{{'tidakLulusModal'.$dt->id}}">Catatan</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form class="" method="post" action="{{ route('supervisor.nilai.tidaklulus.post', $dt->doc->id)}}">
+                                        @csrf
+                                        @method('patch')
+                                            <div class="modal-body">
+                                                <textarea name="catatan" class="form-control" id="catatan" cols="30" rows="4"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Kirim</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                    </form>
+
+                                </div>
+                                </div>
+                            </div>
+
                         </td>
                     </tr>
                 @endforeach

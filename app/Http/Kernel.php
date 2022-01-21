@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\PreventBackHistory;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,5 +67,6 @@ class Kernel extends HttpKernel
         'kepsek' => \App\Http\Middleware\Kepsek::class,
         'supervisor' => \App\Http\Middleware\Supervisor::class,
         'kurikulum' => \App\Http\Middleware\Kurikulum::class,
+        'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
     ];
 }
