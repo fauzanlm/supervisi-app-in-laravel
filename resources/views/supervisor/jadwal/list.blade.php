@@ -37,9 +37,16 @@
                         <td>{{$dt->target->name}}</td>
                         <td>{{$dt->tanggal_supervisi}}</td>
                         <td>{{$dt->jam_dari}} -  {{$dt->jam_sampai}}</td>
-                        <td>{{ $dt->doc->status}}</td>
                         <td>
-                            @if ($dt->doc->catatan != NULL)
+                            @if ($dt->doc != NULL)
+
+                            {{ $dt->doc->status}}
+                            @else
+                                belum mengirim dokumen
+                            @endif
+                        </td>
+                        <td>
+                            @if ($dt->doc != NULL)
 
                             {{ $dt->doc->catatan }}
                             @else
@@ -86,16 +93,19 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        @if ($dt->doc->status != 'lulus')
+                                        @if ($dt->doc != NULL)
 
-                                            <button type="button" class="text-white btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="{{'#lulusModal'.$dt->id}}">
-                                                Lulus
-                                            </button>
-                                        @endif
-                                        @if ($dt->doc->status != 'tidak lulus')
-                                            <button type="button" class="text-white btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="{{'#tidakLulusModal'.$dt->id}}">
-                                                Tidak Lulus
-                                            </button>
+                                            @if ($dt->doc->status != 'lulus')
+
+                                                <button type="button" class="text-white btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="{{'#lulusModal'.$dt->id}}">
+                                                    Lulus
+                                                </button>
+                                            @endif
+                                            @if ($dt->doc->status != 'tidak lulus')
+                                                <button type="button" class="text-white btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="{{'#tidakLulusModal'.$dt->id}}">
+                                                    Tidak Lulus
+                                                </button>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -111,9 +121,10 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form class="" method="post" action="{{ route('supervisor.nilai.post', $dt->doc->id)}}">
-                                        @csrf
-                                        @method('patch')
+                                    @if ($dt->doc != NULL)
+                                        <form class="" method="post" action="{{ route('supervisor.nilai.post', $dt->doc->id)}}">
+                                            @csrf
+                                            @method('patch')
                                             <div class="modal-body">
                                                 <textarea name="catatan" class="form-control" id="catatan" cols="30" rows="4"></textarea>
                                             </div>
@@ -121,7 +132,7 @@
                                                 <button type="submit" class="btn btn-success">Kirim</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
-                                    </form>
+                                        </form>
                                 </div>
                                 </div>
                             </div>
@@ -146,7 +157,7 @@
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
                                     </form>
-
+                                    @endif
                                 </div>
                                 </div>
                             </div>

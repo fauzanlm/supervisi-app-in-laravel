@@ -50,17 +50,29 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @if ($dt->cek)
-                                            abc
+                                        @if ($dt->doc != NULL)
+                                            @if ($dt->doc->status == 'tidak lulus')
+                                                Status: <span class="badge badge-danger">Kamu Tidak Lulus</span>
+                                                <p class="mt-2">Catatan: {{$dt->doc->catatan}}</p>
+
+
+                                            @elseif ($dt->doc->status == 'lulus')
+                                                Status: <span class="badge badge-success">Kamu Lulus</span>
+                                                <p class="mt-2">Catatan: {{$dt->doc->catatan}}</p>
+
+
+                                            @else
+                                                menunggu supervisor...
+                                            @endif
                                         @else
-                                            def
+                                            menunggu supervisor...
                                         @endif
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-info">Save changes</button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                             </div>
                         </td>
